@@ -1,17 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\Specialty;
+use App\Http\Controllers\Controller;
 
 class SpecialtyController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     public function index(){
         $specialities = Specialty::all();
@@ -57,7 +53,6 @@ class SpecialtyController extends Controller
     public function update(Request $request, Specialty $specialty){
     	//dd($request->all());
     	$this->performValidation($request);    	
-    	$this->validate($request, $rules,$messages);
     	$specialty->name = $request->input('name');
     	$specialty->description = $request->input('description');
     	$specialty->save(); 

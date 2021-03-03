@@ -18,14 +18,31 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
+ 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-//specialty
-Route::get('/specialties', [App\Http\Controllers\SpecialtyController::class, 'index']);
-Route::get('/specialties/create', [App\Http\Controllers\SpecialtyController::class, 'create']);
-Route::get('/specialties/{id}/edit', [App\Http\Controllers\SpecialtyController::class, 'edit']);
+Route::middleware(['auth', 'admin'])->group(function () {
+    
+	//specialty
+	Route::get('/specialties', [App\Http\Controllers\Admin\SpecialtyController::class, 'index']);
+	Route::get('/specialties/create', [App\Http\Controllers\Admin\SpecialtyController::class, 'create']);
+	Route::get('/specialties/{id}/edit', [App\Http\Controllers\Admin\SpecialtyController::class, 'edit']);
+	Route::post('/specialties', [App\Http\Controllers\Admin\SpecialtyController::class, 'store']);
+	Route::put('/specialties/{specialty}', [App\Http\Controllers\Admin\SpecialtyController::class, 'update']);
+	Route::delete('/specialties/{id}', [App\Http\Controllers\Admin\SpecialtyController::class, 'destroy']);
 
-Route::post('/specialties', [App\Http\Controllers\SpecialtyController::class, 'store']);
-Route::put('/specialties/{specialty}', [App\Http\Controllers\SpecialtyController::class, 'update']);
-Route::delete('/specialties/{id}', [App\Http\Controllers\SpecialtyController::class, 'destroy']);
+	//doctor
+	Route::resource('/doctors', App\Http\Controllers\Admin\DoctorController::class);
+
+
+	//pacientes
+	Route::resource('/patients', App\Http\Controllers\Admin\PatientController::class);
+
+});
+
+Route::middleware(['auth', 'doctor'])->group(function () {
+
+ 	Route::get('/schedule', [App\Http\Controllers\Doctor\ScheduleController::class, 'edit']);
+ 	Route::post('/schedule', [App\Http\Controllers\Doctor\ScheduleController::class, 'store']);
+
+});

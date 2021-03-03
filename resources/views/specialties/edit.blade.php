@@ -26,11 +26,11 @@
       @method('PUT')      
       <div class="form-group">
           <label class="form-control-label">Nombre de la Especialidad</label>
-          <input class="form-control" type="text" name="name" id="name" value="{{ $specialty->name , old('name')  }}">
+          <input class="form-control" type="text" name="name" id="name" value="{{   old('name', $specialty->name)  }}">
       </div>
       <div class="form-group">
           <label class="form-control-label">Descripción</label>
-          <input class="form-control" type="text" name="description" id="description" value="{{$specialty->description , old('description') }}">
+          <input class="form-control" type="text" name="description" id="description" value="{{ old('description', $specialty->description ) }}">
       </div>
       <button type="submit" class="btn btn-success">Guardar</button>
     </form>

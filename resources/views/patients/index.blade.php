@@ -6,10 +6,10 @@
   <div class="card-header border-0">
     <div class="row align-items-center">
       <div class="col">
-        <h3 class="mb-0">Especialidades</h3>
+        <h3 class="mb-0">Pacientes</h3>
       </div>
       <div class="col text-right">
-        <a href="{{ url('specialties/create') }}" class="btn btn-sm btn-success">Nueva Especialidad</a>
+        <a href="{{ url('patients/create') }}" class="btn btn-sm btn-success">Nuevo Paciente</a>
       </div>
     </div>
   </div>
@@ -28,22 +28,26 @@
       <thead class="thead-light">
         <tr>
           <th scope="col">Nombre</th>
-          <th scope="col">Descripción</th>
+          <th scope="col">E-mail</th>
+          <th scope="col">DNI</th>
           <th scope="col">Opciones</th>
         </tr>
       </thead>
       <tbody>
-        @foreach ($specialities as $specialty)
+        @foreach ($patients as $patient)
         <tr>
           <th scope="row">
-            {{ $specialty->name }}
+            {{ $patient->name }}
           </th>
           <td>
-            {{ $specialty->description }}
+            {{ $patient->email }}
           </td>
           <td>
-            <a href="/specialties/{{$specialty->id}}/edit" class="btn btn-primary btn-sm">Editar</a>
-            <form action="/specialties/{{$specialty->id}}" method="POST">
+            {{ $patient->dni }}
+          </td>
+          <td>
+            <a href="/patients/{{$patient->id}}/edit" class="btn btn-primary btn-sm">Editar</a>
+            <form action="/patients/{{$patient->id}}" method="POST">
               @csrf
               @method('DELETE')
               <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>              
@@ -53,7 +57,15 @@
         @endforeach        
       </tbody>
     </table>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        {{ $patients->links() }}
+      </ul>
+    </nav>
   </div>
+  
+
+  
 </div>
 
 @endsection
